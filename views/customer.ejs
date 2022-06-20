@@ -42,20 +42,19 @@
                     opt.innerText = item;
                     ufsHtml.add(opt);
                 });
+                <%
+                    if(customer.uf){
+                        %>
+                        ufsHtml.value = "<%= customer.uf %>";
+                        <%
+
+                    }
+                %>
             })
             .catch(error => alert(error));
         if(window.location.search){
             const error = window.location.search.split("=")[1];
             alert(decodeURI(error));
         }
-
-        <%
-            if(customer.uf){
-                %>
-                document.getElementById("uf").value = "<%= customer.uf %>";
-                <%
-
-            }
-        %>
     </script>
 </html>
