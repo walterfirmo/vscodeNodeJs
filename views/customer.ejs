@@ -21,10 +21,7 @@
                 Regiao: <input type="text" name="cidade" value="<%= customer.cidade %>" />
                 <select id="uf" name="uf" value="<%= customer.uf %>" >
                     <option>Selecione a UF:</option>
-                    <option>RS</option>
-                    <option>SP</option>
-                    <option>SC</option>
-                    <option>PR</option>
+
                 </select>
             </p>
             <input type="hidden" name="id" value="<%= customer._id %>" />
@@ -35,6 +32,18 @@
         </fieldset>
     </form>
     <script>
+        fetch("https://servicodados.ibge.gov.br/api/v1/localidades/estados")
+            .then(response => response.json())
+            .then(json => {
+                const ufsHtml = document.getElementById("uf");
+                const siglas = json.map(item => item.sigla).sort();
+                siglas.forEach(item => {
+                    const opt = document.createElement("option");
+                    opt.innerText = item;
+                    ufsHtml.add(opt);
+                });
+            })
+            .catch(error => alert(error));
         if(window.location.search){
             const error = window.location.search.split("=")[1];
             alert(decodeURI(error));
